@@ -12,20 +12,40 @@ db = SQLAlchemy()
 ##############################################################################
 # Part 1: Compose ORM
 
-# class Brand(db.Model):
-#     """Car brand."""
+class Brand(db.Model):
+    """ car brands"""
 
-#     __tablename__ = "brands"
+    __tablename__ = "brands"
+    brand_id = db.Column(db.String(5), primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    founded = db.Column(db.Integer, nullable=True)
+    headquarters = db.Column(db.String(50), nullable=True)
+    discontinued = db.Column(db.Integer, nullable=True)
 
-#     pass
+    def __repr__(self):
+        """Provide useful output when printing."""
+
+        return "<Brand {name} brand_id={b_id}>".format(name=self.name,
+                                                       b_id=self.brand_id)
+
+    
 
 
-# class Model(db.Model):
-#     """Car model."""
+ class Model(db.Model):
+    """Car model."""
+    __tablename__ = "models"
+    model_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    year = db.Column(db.Integer, nullable=False)
+    brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'),
+                         nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    brand = db.relationship("Brand", backref="models")
 
-#     __tablename__ = "models"
-
-#     pass
+    def __repr__(self):
+        """provide useful output when printing"""
+        return "<Model {yr} {name} model_id={m_id}>".format(yr=self.year,
+                                                            name=self.name,
+                                                            m_id=self.model_id)
 
 # End Part 1
 
