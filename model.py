@@ -31,14 +31,16 @@ class Brand(db.Model):
     
 
 
- class Model(db.Model):
+class Model(db.Model):
     """Car model."""
     __tablename__ = "models"
     model_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     year = db.Column(db.Integer, nullable=False)
     brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'),
                          nullable=False)
+
     name = db.Column(db.String(50), nullable=False)
+
     brand = db.relationship("Brand", backref="models")
 
     def __repr__(self):
